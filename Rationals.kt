@@ -1,3 +1,7 @@
+package rationals
+
+import java.math.BigInteger
+
 class Rational constructor (n: BigInteger, d: BigInteger): Comparable<Rational> {
 
     var n: BigInteger
@@ -34,7 +38,7 @@ class Rational constructor (n: BigInteger, d: BigInteger): Comparable<Rational> 
         other as Rational
         normalize()
         other.normalize()
-        return this.d == other.d && this.n == other.n
+        return d == other.d && n == other.n
     }
 
     override fun compareTo(other: Rational): Int {
@@ -45,26 +49,26 @@ class Rational constructor (n: BigInteger, d: BigInteger): Comparable<Rational> 
 
     override fun toString(): String {
         normalize()
-        if (this.d == 1.toBigInteger()) { return "$n" }
+        if (d == 1.toBigInteger()) { return "$n" }
         return "$n/$d"
     }
 
     private fun normalize() {
-        val gcd = this.n.gcd(this.d)
-        this.n = this.n / gcd
-        this.d = this.d / gcd
+        val gcd = n.gcd(d)
+        n = n / gcd
+        d = d / gcd
 
         val neg = -1
         val pos = 1
 
-        if (this.n.signum() == neg && this.d.signum() == neg) {
-            this.n = this.n.abs()
-            this.d = this.d.abs()
+        if (n.signum() == neg && d.signum() == neg) {
+            n = n.abs()
+            d = d.abs()
         }
 
-        if (this.n.signum() == pos && this.d.signum() == neg) {
-            this.n = -this.n
-            this.d = this.d.abs()
+        if (n.signum() == pos && d.signum() == neg) {
+            n = -n
+            d = d.abs()
         }
     }
 
@@ -73,11 +77,11 @@ class Rational constructor (n: BigInteger, d: BigInteger): Comparable<Rational> 
 }
 
 infix fun Int.divBy(v2: Int): Rational {
-    return Rational(this.toBigInteger(), v2.toBigInteger())
+    return Rational(toBigInteger(), v2.toBigInteger())
 }
 
 infix fun Long.divBy(v2: Long): Rational {
-    return Rational(this.toBigInteger(), v2.toBigInteger())
+    return Rational(toBigInteger(), v2.toBigInteger())
 }
 
 infix fun BigInteger.divBy(denominator: BigInteger): Rational {
@@ -120,7 +124,7 @@ fun main() {
     println(half < twoThirds)
 
     println(half in third..twoThirds)
-    
+
     println("912016490186296920119201192141970416029".toBigInteger() divBy
             "1824032980372593840238402384283940832058".toBigInteger() == 1 divBy 2)
 }
